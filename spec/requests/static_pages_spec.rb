@@ -39,4 +39,15 @@ describe "StaticPages" do
     it { should have_title(full_title('Contact')) }
   end
 
+  it "should have the right links on the layout" do
+    visit root_path
+    click_link "sample app"
+    click_link "About"
+    click_link "Contact"
+    click_link "News"
+    click_link "Home"
+    click_link "Help"
+    click_link "Rails Tutorial"
+  end
+
 end
