@@ -47,6 +47,18 @@ describe "UserPages" do
         it { should_not have_link('delete', href: user_path(admin)) }
       end
     end
+
+    describe "" do
+      let(:admin) { FactoryGirl.create(:admin) }
+      # let(:user) { FactoryGirl.create(:user) }
+      
+      before do
+        sign_in admin
+        page.driver.submit :delete, "/users/#{admin.id}", {}
+        # page.driver.submit :delete, "/users/#{user.id}", {}
+      end
+      it { should have_content('Not destroyed') }
+    end
   end
   
   describe "profile page" do
