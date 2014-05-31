@@ -43,6 +43,21 @@ describe "Authentication" do
         it { should have_link('Sign in') }
       end
     end
+
+    describe "can't" do
+      let(:user) { FactoryGirl.create(:user) }
+      before { sign_in user, no_capybara: true }
+
+      describe "new" do
+        before { get signup_path }
+        specify { expect(response).to redirect_to(root_path) }
+      end
+
+      describe "create" do
+        before { post users_path }
+        specify { expect(response).to redirect_to(root_path) }
+      end
+    end
   end
 
   describe "authorization" do
