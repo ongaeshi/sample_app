@@ -35,8 +35,8 @@ describe "Authentication" do
       it { should have_link('Users', href: users_path) }
       it { should have_link('Profile', href: user_path(user)) }
       it { should have_link('Settings', href: edit_user_path(user)) }
-      it { should have_link('Sign out'), href: signout_path }
-      it { should_not have_link('Sign in'), href: signin_path }
+      it { should have_link('Sign out', href: signout_path) }
+      it { should_not have_link('Sign in', href: signin_path) }
 
       describe "followed by signout" do
         before { click_link "Sign out" }
@@ -49,6 +49,18 @@ describe "Authentication" do
 
     describe "for non-signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
+
+      describe "with valid information" do
+        before do
+          visit root_path
+        end
+        
+        it { should_not have_link('Users', href: users_path) }
+        it { should_not have_link('Profile', href: user_path(user)) }
+        it { should_not have_link('Settings', href: user_path(user)) }
+        it { should_not have_link('Sign out', href: signout_path) }
+        it { should have_link('Sign in', href: signin_path) }
+      end
 
       describe "when attempting to visit a protected page" do
         before do
